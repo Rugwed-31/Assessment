@@ -1,0 +1,21 @@
+CREATE TABLE Table_India (
+    Customer_Name VARCHAR(255) NOT NULL,
+    Customer_ID VARCHAR(18) NOT NULL,
+    Open_Date DATE NOT NULL,
+    Last_Consulted_Date DATE,
+    Vaccination_Type CHAR(5),
+    Doctor_Consulted VARCHAR(255),
+    State CHAR(5),
+    Country CHAR(5),
+    DOB DATE,
+    Is_Active CHAR(1),
+    Age INT GENERATED ALWAYS AS (YEAR(CURDATE()) - YEAR(DOB)) STORED,
+    Days_Since_Last_Consultation INT GENERATED ALWAYS AS (DATEDIFF(CURDATE(), Last_Consulted_Date)) STORED,
+    PRIMARY KEY (Customer_ID)
+);
+For validation
+SELECT *
+FROM Staging_Table
+WHERE CHAR_LENGTH(Customer_ID) > 18
+OR ISDATE(Open_Date) = 0
+OR ISDATE(Last_Consulted_Date) = 0;
